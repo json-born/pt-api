@@ -1,0 +1,37 @@
+{
+  "name": "pt-api",
+  "author": "Domenico Salvia",
+  "license": "ISC",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node ./bin/www",
+    "debug": "node --debug ./bin/www",
+    "watch": "tsc && concurrently 'tsc -w' 'nodemon .bin/www'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DBSalvia/pt-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DBSalvia/pt-api/issues"
+  },
+  "homepage": "https://github.com/DBSalvia/pt-api#readme",
+  "dependencies": {
+    "@types/dotenv": "^4.0.2",
+    "@types/koa": "^2.0.39",
+    "@types/koa-bodyparser": "^3.0.25",
+    "@types/koa-morgan": "^1.0.3",
+    "@types/koa-router": "^7.0.23",
+    "@types/node": "^8.0.47",
+    "@types/winston": "^2.3.7",
+    "commander": "^2.11.0",
+    "dotenv": "^4.0.0",
+    "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-logger": "^3.1.0",
+    "koa-router": "^7.2.1",
+    "mysql": "^2.15.0",
+    "typescript": "^2.5.3",
+    "winston": "^2.4.0"
+  }
+}

@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+const commander = require('commander');
+const app = require('../dist/app');
+const logger = require('../dist/lib/logger').logger;
+
+commander
+  .option('-H, --host <host>', 'specify the host [0.0.0.0]', '0.0.0.0')
+  .option('-p, --port <port>', 'specify the port [4000]', '4000')
+  .parse(process.argv);
+
+app.listen(commander.port, commander.host, () => {
+  logger.info(`Listening on ${commander.host}:${commander.port}`);
+});
