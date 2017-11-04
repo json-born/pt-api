@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const dotenv = require('dotenv').config();
 const commander = require('commander');
 const app = require('../dist/app');
 const logger = require('../dist/lib/logger').logger;

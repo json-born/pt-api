@@ -1,4 +1,6 @@
-﻿CREATE TABLE `Media` (
+﻿CREATE DATABASE pt_api
+
+CREATE TABLE `media` (
     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `url` VARCHAR(255) NOT NULL,
     `comment` TEXT NOT NULL,
@@ -6,9 +8,9 @@
     PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `User` (
+CREATE TABLE `users` (
     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `trainer_id` INT(11) UNSIGNED NOT NULL,
+    `trainer_id` INT(11) UNSIGNED,
     `first_name` VARCHAR(255) NOT NULL,
     `last_name` VARCHAR(255) NOT NULL,
     `avatar_url` VARCHAR(255) NOT NULL,
@@ -18,26 +20,21 @@ CREATE TABLE `User` (
     PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Consultation` (
+CREATE TABLE `consultations` (
     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `date_time` DATE NOT NULL,
-    `trainer_id` INT(11) UNSIGNED NOT NULL,
     `client_id` INT(11) UNSIGNED NOT NULL,
     PRIMARY KEY (`id`)
 );
 
-ALTER TABLE Media ADD CONSTRAINT `fk_Media_client_id`
+ALTER TABLE media ADD CONSTRAINT `fk_media_clients_id`
 FOREIGN KEY(`client_id`)
-REFERENCES User (`id`);
+REFERENCES users (`id`);
 
-ALTER TABLE User ADD CONSTRAINT `fk_User_trainer_id`
+ALTER TABLE users ADD CONSTRAINT `fk_user_trainer_id`
 FOREIGN KEY(`trainer_id`)
-REFERENCES User (`id`);
+REFERENCES users (`id`);
 
-ALTER TABLE Consultation ADD CONSTRAINT `fk_Consultation_trainer_id`
-FOREIGN KEY(`trainer_id`)
-REFERENCES User (`id`);
-
-ALTER TABLE Consultation ADD CONSTRAINT `fk_Consultation_client_id`
+ALTER TABLE consultations ADD CONSTRAINT `fk_consultations_client_id`
 FOREIGN KEY(`client_id`)
-REFERENCES User (`id`);
+REFERENCES users (`id`);

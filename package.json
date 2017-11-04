@@ -4,7 +4,7 @@
   "license": "ISC",
   "version": "1.0.0",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "tsc && node ./bin/www",
     "debug": "node --debug ./bin/www",
     "watch": "tsc && concurrently 'tsc -w' 'nodemon .bin/www'"
   },
@@ -22,6 +22,7 @@
     "@types/koa-bodyparser": "^3.0.25",
     "@types/koa-morgan": "^1.0.3",
     "@types/koa-router": "^7.0.23",
+    "@types/mysql": "^2.15.0",
     "@types/node": "^8.0.47",
     "@types/winston": "^2.3.7",
     "commander": "^2.11.0",
@@ -33,5 +34,6 @@
     "mysql": "^2.15.0",
     "typescript": "^2.5.3",
     "winston": "^2.4.0"
-  }
+  },
+  "devDependencies": {}
 }
