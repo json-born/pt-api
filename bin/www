@@ -10,6 +10,8 @@ commander
   .option('-p, --port <port>', 'specify the port [4000]', '4000')
   .parse(process.argv);
 
-app.listen(commander.port, commander.host, () => {
+const server = app.listen(commander.port, commander.host, () => {
   logger.info(`Listening on ${commander.host}:${commander.port}`);
 });
+
+module.exports = server

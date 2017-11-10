@@ -7,7 +7,6 @@ import { router } from './router';
 import { globalErrorHandler } from './middleware/global-error-handler';
 import { defaultResponseBody } from './middleware/default-response-body';
 
-
 export const app = new Koa();
 
 app.use(Logger());
