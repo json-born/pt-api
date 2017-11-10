@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 const dotenv = require('dotenv').config();
 const commander = require('commander');
-const app = require('../dist/app');
-const logger = require('../dist/lib/logger').logger;
+
+const app = require('../dist/index').app;
+const logger = require('../dist/lib/logger').instance;
 
 commander
   .option('-H, --host <host>', 'specify the host [0.0.0.0]', '0.0.0.0')

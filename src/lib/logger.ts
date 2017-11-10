@@ -8,7 +8,7 @@ const mode = {
   }),
 };
 
-export const logger: LoggerInstance = new Logger({
+export const instance: LoggerInstance = new Logger({
   transports: [
     mode.debug
   ],
