@@ -17,10 +17,10 @@ CREATE TABLE `users` (
     `trainer_id` INT(11) UNSIGNED,
     `first_name` VARCHAR(255) NOT NULL,
     `last_name` VARCHAR(255) NOT NULL,
-    `avatar_url` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
+    `avatar_url` VARCHAR(255),
+    `email` VARCHAR(255) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
-    `consultations_available` INT(11) UNSIGNED NOT NULL,
+    `consultations_available` INT(11) UNSIGNED NOT NULL DEFAULT 0,
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
@@ -28,7 +28,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `consultations` (
     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `date_time` DATE NOT NULL,
+    `date` DATE NOT NULL,
     `client_id` INT(11) UNSIGNED NOT NULL,
     `trainer_id` INT(11) UNSIGNED NOT NULL,
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -55,3 +55,9 @@ REFERENCES users (`id`);
 ALTER TABLE consultations ADD CONSTRAINT `fk_consultations_trainer_id`
 FOREIGN KEY(`trainer_id`)
 REFERENCES users (`id`);
+
+ALTER TABLE consultations ADD CONSTRAINT `uc_consultations_trainer_id_date`
+UNIQUE (`trainer_id`, `date`);
+
+ALTER TABLE consultations ADD CONSTRAINT `uc_consultations_client_id_date`
+UNIQUE (`client_id`, `date`);

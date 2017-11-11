@@ -9,12 +9,13 @@
     "module": "commonjs"
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "db-scripts/seeds/*.ts"
   ],
   "exclude": [
     "dist",
     "node_modules",
-    "db-scripts",
-    "**/*.spec.ts"
+    "db-scripts/migrations",
+    "test"
   ]
 }
