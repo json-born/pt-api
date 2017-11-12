@@ -11,7 +11,7 @@ const run = async () => {
     await users.reset();
     
     await users.seed();
-    //await media.seed();
+    await media.seed();
     await consultations.seed();
 };
 
