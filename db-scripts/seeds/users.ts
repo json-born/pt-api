@@ -1,19 +1,21 @@
 import * as faker from 'faker';
 import { database } from '../../src/lib/database';
 
-export const reset = async () => {
 
+export async function seed() {
+    await seedTrainer();
+    await seedClients(10);
+}
+
+export async function reset() {
     await database('users')
         .where('type', 'client')
         .del();
 
     await database('users').del();
-
-    return;
 }
 
-export const seedTrainer = async () => {
-
+async function seedTrainer() {
     await database('users').insert({
         type: 'trainer',
         first_name: 'Ryan',
@@ -21,17 +23,14 @@ export const seedTrainer = async () => {
         email: 'info@reptcoaching.co.uk',
         password: 'password'
     });
-
-    return;
 }
 
-export const seedClients = async (count: number) => {
-
+async function seedClients(count: number) {
     const trainer = await database
         .select()
         .from('users')
         .where('type', 'trainer')
-        .first()
+        .first();
 
     for (let i = 0; i < count; i++) {
         await database('users').insert({
@@ -44,6 +43,4 @@ export const seedClients = async (count: number) => {
             consultations_available: faker.random.number({min: 0, max: 10})
         });
     }
-
-    return;
 }

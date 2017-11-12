@@ -32,7 +32,6 @@
     "@types/winston": "^2.3.7",
     "commander": "^2.11.0",
     "dotenv": "^4.0.0",
-    "faker": "^4.1.0",
     "knex": "^0.14.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
@@ -44,7 +43,9 @@
     "winston": "^2.4.0"
   },
   "devDependencies": {
+    "faker": "^4.1.0",
     "jest": "^21.2.1",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "youtube-random-video": "^1.0.5"
   }
 }

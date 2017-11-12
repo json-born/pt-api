@@ -2,14 +2,17 @@ import 'dotenv/config';
 
 import { logger } from '../../src/lib/logger';
 import * as users from './users';
+import * as media from './media';
+import * as consultations from './consultations';
 
 const run = async () => {
-
+    await media.reset();
+    await consultations.reset();
     await users.reset();
-    await users.seedTrainer();
-    await users.seedClients(10);
-
-    return;
+    
+    await users.seed();
+    //await media.seed();
+    await consultations.seed();
 };
 
 run().then(() => {
