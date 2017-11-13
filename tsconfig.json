@@ -9,13 +9,6 @@
     "module": "commonjs"
   },
   "include": [
-    "src/**/*.ts",
-    "db-scripts/seeds/*.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules",
-    "db-scripts/migrations",
-    "test"
+    "src/**/*.ts"
   ]
 }

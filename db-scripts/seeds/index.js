@@ -1,9 +1,9 @@
-import 'dotenv/config';
+const env = require('dotenv').config();
 
-import { logger } from '../../src/lib/logger';
-import * as users from './users';
-import * as media from './media';
-import * as consultations from './consultations';
+const logger = require('../../dist/lib/logger').logger;
+const users = require('./users');
+const media = require('./media');
+const consultations = require('./consultations');
 
 const run = async () => {
     await media.reset();
@@ -11,9 +11,13 @@ const run = async () => {
     await users.reset();
     
     await users.seed();
-    await media.seed();
+//    await media.seed();
     await consultations.seed();
 };
+
+if(process.env.NODE_ENV === 'production') {
+    process.exit();
+}
 
 run().then(() => {
     logger.info('seeding complete');

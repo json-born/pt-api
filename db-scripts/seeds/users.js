@@ -1,13 +1,12 @@
-import * as faker from 'faker';
-import { database } from '../../src/lib/database';
+const faker = require('faker');
+const database = require('../../dist/lib/database').database;
 
-
-export async function seed() {
+async function seed() {
     await seedTrainer();
     await seedClients(10);
 }
 
-export async function reset() {
+async function reset() {
     await database('users')
         .where('type', 'client')
         .del();
@@ -25,7 +24,7 @@ async function seedTrainer() {
     });
 }
 
-async function seedClients(count: number) {
+async function seedClients(count = 10) {
     const trainer = await database
         .select()
         .from('users')
@@ -43,4 +42,9 @@ async function seedClients(count: number) {
             consultations_available: faker.random.number({min: 0, max: 10})
         });
     }
+}
+
+module.exports = {
+    reset: reset,
+    seed: seed
 }

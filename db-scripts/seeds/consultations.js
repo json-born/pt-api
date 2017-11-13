@@ -1,12 +1,11 @@
-import * as faker from 'faker';
+const faker = require('faker');
+const database = require('../../dist/lib/database').database;
 
-import { database } from '../../src/lib/database';
-
-export async function reset() {
+async function reset() {
     await database('consultations').del();
 }
 
-export async function seed(count: number = 10) {
+async function seed(count = 10) {
 
     const trainer = await database
         .select()
@@ -29,4 +28,9 @@ export async function seed(count: number = 10) {
                 })
         }
     }
+}
+
+module.exports = {
+    seed: seed,
+    reset: reset
 }

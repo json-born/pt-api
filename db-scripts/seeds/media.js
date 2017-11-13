@@ -1,12 +1,12 @@
-import * as faker from 'faker';
-import * as youtube from 'youtube-random-video';
-import { database } from '../../src/lib/database';
+const faker = require('faker');
+const youtube = require('youtube-random-video');
+const database = require('../../dist/lib/database').database;
 
-export async function reset() {
+async function reset() {
     await database('media').del();
 }
 
-export async function seed(count: number = 10) {
+async function seed(count = 10) {
 
     const trainer = await database
         .select()
@@ -42,4 +42,9 @@ function getRandomVideo() {
             else { reject(error) }
         });
     });
+}
+
+module.exports = {
+    reset: reset,
+    seed: seed
 }

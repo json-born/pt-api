@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc && node ./bin/www",
     "test": "jest",
-    "seed": "tsc && node ./dist/db-scripts/seeds/index.js"
+    "seed": "tsc && node ./db-scripts/seeds/index.js"
   },
   "repository": {
     "type": "git",
