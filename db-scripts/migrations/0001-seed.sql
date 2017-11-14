@@ -13,7 +13,7 @@ CREATE TABLE `media` (
     PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `users` (
+CREATE TABLE `user` (
     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `type` ENUM('trainer', 'client'),
     `trainer_id` INT(11) UNSIGNED,
@@ -28,7 +28,7 @@ CREATE TABLE `users` (
     PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `consultations` (
+CREATE TABLE `consultation` (
     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `start_date` DATETIME NOT NULL,
     `end_date` DATETIME NOT NULL,
@@ -38,6 +38,15 @@ CREATE TABLE `consultations` (
     `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 );
+
+CREATE TABLE `trainer_availability` (
+    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `trainer_id` INT(11) UNSIGNED NOT NULL,
+    `day_of_week` ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
+    `start_time` TIME NOT NULL
+    `end_time` TIME NOT NULL
+    PRIMARY KEY (`id`)
+) 
 
 ALTER TABLE media ADD CONSTRAINT `fk_media_trainer_id`
 FOREIGN KEY(`trainer_id`)
@@ -58,3 +67,10 @@ REFERENCES users (`id`);
 ALTER TABLE consultations ADD CONSTRAINT `fk_consultations_trainer_id`
 FOREIGN KEY(`trainer_id`)
 REFERENCES users (`id`);
+
+ALTER TABLE trainer_availability ADD CONSTRAINT `fk_trainer_availability_trainer_id`
+FOREIGN KEY(`trainer_id`)
+REFERENCES users (`id`);
+
+ALTER TABLE trainer_availability
+ADD CONSTRAINT `uc_trainer_availability` UNIQUE (`trainer_id`,`day_of_week`);

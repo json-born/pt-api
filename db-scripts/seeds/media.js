@@ -10,13 +10,13 @@ async function seed(count = 10) {
 
     const trainer = await database
         .select()
-        .from('users')
+        .from('user')
         .where('type', 'trainer')
         .first();
     
     const clients = await database
         .select()
-        .from('users')
+        .from('user')
         .where('type', 'client');
 
     for (let client of clients) {

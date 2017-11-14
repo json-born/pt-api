@@ -7,15 +7,15 @@ async function seed() {
 }
 
 async function reset() {
-    await database('users')
+    await database('user')
         .where('type', 'client')
         .del();
 
-    await database('users').del();
+    await database('user').del();
 }
 
 async function seedTrainer() {
-    await database('users').insert({
+    await database('user').insert({
         type: 'trainer',
         first_name: 'Ryan',
         last_name: 'Evans',
@@ -27,12 +27,12 @@ async function seedTrainer() {
 async function seedClients(count = 10) {
     const trainer = await database
         .select()
-        .from('users')
+        .from('user')
         .where('type', 'trainer')
         .first();
 
     for (let i = 0; i < count; i++) {
-        await database('users').insert({
+        await database('user').insert({
             type: 'client',
             trainer_id: trainer.id,
             first_name: faker.name.firstName(),

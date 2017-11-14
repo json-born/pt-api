@@ -2,7 +2,7 @@ const faker = require('faker');
 const database = require('../../dist/lib/database').database;
 
 async function reset() {
-    await database('consultations').del();
+    await database('consultation').del();
 }
 
 async function seed(count = 10) {
@@ -20,7 +20,7 @@ async function seed(count = 10) {
 
     for (let client of clients) {
         for(let i = 0; i < count; i++) {
-            await database('consultations')
+            await database('consultation')
                 .insert({
                     client_id: client.id,
                     trainer_id: trainer.id,

@@ -1,9 +1,9 @@
 const env = require('dotenv').config();
 
 const logger = require('../../dist/lib/logger').logger;
-const users = require('./users');
+const users = require('./user');
 const media = require('./media');
-const consultations = require('./consultations');
+const consultations = require('./consultation');
 
 const run = async () => {
     await media.reset();
@@ -11,7 +11,7 @@ const run = async () => {
     await users.reset();
     
     await users.seed();
-//    await media.seed();
+    await media.seed();
     await consultations.seed();
 };
 
