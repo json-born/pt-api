@@ -1,5 +1,7 @@
 ﻿CREATE DATABASE pt_api
 
+SET GLOBAL time_zone = '+00:00';
+
 CREATE TABLE `media` (
     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `media_url` VARCHAR(255) NOT NULL,
@@ -28,7 +30,8 @@ CREATE TABLE `users` (
 
 CREATE TABLE `consultations` (
     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `date` DATETIME NOT NULL,
+    `start_date` DATETIME NOT NULL,
+    `end_date` DATETIME NOT NULL,
     `client_id` INT(11) UNSIGNED NOT NULL,
     `trainer_id` INT(11) UNSIGNED NOT NULL,
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -55,9 +58,3 @@ REFERENCES users (`id`);
 ALTER TABLE consultations ADD CONSTRAINT `fk_consultations_trainer_id`
 FOREIGN KEY(`trainer_id`)
 REFERENCES users (`id`);
-
-ALTER TABLE consultations ADD CONSTRAINT `uc_consultations_trainer_id_date`
-UNIQUE (`trainer_id`, `date`);
-
-ALTER TABLE consultations ADD CONSTRAINT `uc_consultations_client_id_date`
-UNIQUE (`client_id`, `date`);
