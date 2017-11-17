@@ -52,9 +52,9 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
-"@types/faker@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@types/faker/-/faker-4.1.1.tgz#989666efde54c07b7f960a552b5fceb5d5e570e0"
+"@types/faker@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@types/faker/-/faker-4.1.2.tgz#f8ab50c9f9af68c160dd71b63f83e24b712d0df5"
 
 "@types/http-assert@*":
   version "1.2.2"
@@ -64,14 +64,14 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/keygrip/-/keygrip-1.0.1.tgz#ff540462d2fb4d0a88441ceaf27d287b01c3d878"
 
-"@types/knex@^0.0.64":
-  version "0.0.64"
-  resolved "https://registry.yarnpkg.com/@types/knex/-/knex-0.0.64.tgz#919d91cec9ddb9e9c44794425068a256b4a72b7b"
+"@types/knex@^0.0.65":
+  version "0.0.65"
+  resolved "https://registry.yarnpkg.com/@types/knex/-/knex-0.0.65.tgz#e65a70b5bb617f11e65aac301070ef7f1eeddfd8"
   dependencies:
     "@types/bluebird" "*"
     "@types/node" "*"
 
-"@types/koa-bodyparser@^3.0.25":
+"@types/koa-bodyparser@^3.0.26":
   version "3.0.26"
   resolved "https://registry.yarnpkg.com/@types/koa-bodyparser/-/koa-bodyparser-3.0.26.tgz#fe17932fe0dbf52369bcf94adea5def41bb6269c"
   dependencies:
@@ -81,20 +81,20 @@
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@types/koa-compose/-/koa-compose-3.2.2.tgz#dc106e000bbf92a3ac900f756df47344887ee847"
 
-"@types/koa-morgan@^1.0.3":
+"@types/koa-morgan@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@types/koa-morgan/-/koa-morgan-1.0.4.tgz#69d67084521425859ae275370b8584076cf44aec"
   dependencies:
     "@types/koa" "*"
     "@types/morgan" "*"
 
-"@types/koa-router@^7.0.23":
-  version "7.0.24"
-  resolved "https://registry.yarnpkg.com/@types/koa-router/-/koa-router-7.0.24.tgz#24fbba35f9a7edffadfd57c96963f8421a85576b"
+"@types/koa-router@^7.0.25":
+  version "7.0.25"
+  resolved "https://registry.yarnpkg.com/@types/koa-router/-/koa-router-7.0.25.tgz#2f233c66e82351047e350f43018094d2751882ef"
   dependencies:
     "@types/koa" "*"
 
-"@types/koa@*", "@types/koa@^2.0.39":
+"@types/koa@*", "@types/koa@^2.0.40":
   version "2.0.40"
   resolved "https://registry.yarnpkg.com/@types/koa/-/koa-2.0.40.tgz#d09f5c2e58b68932580b747f2ff763299ce9cc7f"
   dependencies:
@@ -115,15 +115,15 @@
   dependencies:
     "@types/express" "*"
 
-"@types/mysql@^2.15.0":
+"@types/mysql@^2.15.1":
   version "2.15.1"
   resolved "https://registry.yarnpkg.com/@types/mysql/-/mysql-2.15.1.tgz#8cd75c484daac9e57f72786dfc7bc4ccecbd5b7e"
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^8.0.47":
-  version "8.0.50"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.50.tgz#dc545448e128c88c4eec7cd64025fcc3b7604541"
+"@types/node@*", "@types/node@^8.0.53":
+  version "8.0.53"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.53.tgz#396b35af826fa66aad472c8cb7b8d5e277f4e6d8"
 
 "@types/serve-static@*":
   version "1.13.1"
@@ -131,6 +131,10 @@
   dependencies:
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
+
+"@types/validator@^6.3.0":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-6.3.0.tgz#d7454bd67c6a933a9dbe939ae16edbf0f6894e70"
 
 "@types/winston@^2.3.7":
   version "2.3.7"
@@ -477,12 +481,6 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-better-assert@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/better-assert/-/better-assert-1.0.2.tgz#40866b9e1b9e0b55b481894311e68faffaebc522"
-  dependencies:
-    callsite "1.0.0"
-
 bignumber.js@4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-4.0.4.tgz#7c40f5abcd2d6623ab7b99682ee7db81b11889a4"
@@ -553,10 +551,6 @@ bytes@3.0.0:
 bytes@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.5.0.tgz#4c9423ea2d252c270c41b2bdefeff9bb6b62c06a"
-
-callsite@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/callsite/-/callsite-1.0.0.tgz#280398e5d664bd74038b6f0905153e6e8af1bc20"
 
 callsites@^2.0.0:
   version "2.0.0"
@@ -1934,15 +1928,6 @@ koa-bodyparser@^4.2.0:
     co-body "^5.1.0"
     copy-to "^2.0.1"
 
-koa-bouncer@^6.0.4:
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/koa-bouncer/-/koa-bouncer-6.0.4.tgz#b6e8e40aa13251293a05f253867145c3a2951d47"
-  dependencies:
-    better-assert "^1.0.2"
-    debug "^3.1.0"
-    lodash "^4.0.0"
-    validator "^9.0.0"
-
 koa-compose@^3.0.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/koa-compose/-/koa-compose-3.2.1.tgz#a85ccb40b7d986d8e5a345b3a1ace8eabcf54de7"
@@ -2085,7 +2070,7 @@ lodash.mapvalues@^4.4.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz#1bafa5005de9dd6f4f26668c30ca37230cc9689c"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.4, lodash@^4.6.0:
+lodash@^4.14.0, lodash@^4.17.4, lodash@^4.6.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -3122,7 +3107,7 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
 
-validator@^9.0.0:
+validator@^9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/validator/-/validator-9.1.1.tgz#3bdd1065cbd28f9d96ac806dee01030d32fd97ef"
 
