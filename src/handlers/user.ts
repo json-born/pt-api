@@ -9,13 +9,25 @@ import {
 import * as userService from '../services/user';
 
 export async function register(ctx: Context, next: Function) {
-    delete ctx.request.body.confirm_password;
     let payload: userService.UserPayload = ctx.request.body;
     const trainer: userService.UserPayload = await userService.getTrainer();
+    
+    delete payload.confirm_password;
     payload.trainer_id = trainer.id;
-    const result = await userService.create(payload);
-    payload.id = result.shift();
-    delete payload.password;
-    ctx.response.body = payload;
+    
+    try {
+        const result = await userService.create(payload);
+        delete payload.password;
+        payload.id = result.shift();
+        ctx.response.body = payload;
+    }
+    catch(error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+            ctx.response.status = 409;
+            ctx.response.body = {
+                email: 'ERROR_EXISTING_EMAIL'
+            };
+        }
+    }
 }
 

@@ -36,7 +36,7 @@ describe('routes: user (POST)', () => {
         expect(response.body.confirm_password).toBeUndefined();
     });
 
-    test('Return 422 if passwords and password_confirmation dont match.', async () => {
+    test('Return 400 if passwords and password_confirmation dont match.', async () => {
       
         const payload = {
             'first_name': faker.name.firstName(),
@@ -51,60 +51,74 @@ describe('routes: user (POST)', () => {
             .set('content-type', 'application/json')
             .send(payload);
 
-        expect(response.status).toEqual(422);
+        expect(response.status).toEqual(400);
         expect(response.type).toEqual('application/json');
         expect(response.body.confirm_password).toEqual('ERROR_PASSWORD_MISMATCH');
     });
   
-    /* test('Return 422 if email is invalid.', async () => {
+    test('Return 400 if email is invalid.', async () => {
       
       const payload = {
-        first_name: 'Domenico',
-        last_name: 'Salvia',
-        email: 'some_invalid_email',
-        password: 'password123',
-        confirm_password: 'password123'
+        'first_name': 'Domenico',
+        'last_name': 'Salvia',
+        'email': 'some_invalid_email',
+        'password': 'password123',
+        'confirm_password': 'password123'
       }
       
-      const response = await request(server).post('/user', payload);
+      const response = await request(server)
+        .post('/user')
+        .set('content-type', 'application/json')
+        .send(payload);
       
-      expect(response.status).toEqual(422);
+      expect(response.status).toEqual(400);
       expect(response.type).toEqual('application/json');
-      expect(response.body.data.error.email).toEqual('ERROR_INVALID_EMAIL');
+      expect(response.body.email).toEqual('ERROR_INVALID_EMAIL');
     });
   
-    test('Return 422 if any fields are missing.', async () => {
+    test('Return 400 if any fields are missing.', async () => {
       
       const payload = {}
       
-      const response = await request(server).post('/user', payload);
+      const response = await request(server)
+        .post('/user')
+        .set('content-type', 'application/json')
+        .send(payload);
       
-      expect(response.status).toEqual(422);
+      expect(response.status).toEqual(400);
       expect(response.type).toEqual('application/json');
       
-      expect(response.body.data.error.first_name).toEqual('ERROR_MISSING_FIRST_NAME');
-      expect(response.body.data.error.last_name).toEqual('ERROR_MISSING_LAST_NAME');
-      expect(response.body.data.error.email).toEqual('ERROR_MISSING_EMAIL');
-      expect(response.body.data.error.password).toEqual('ERROR_MISSING_PASSWORD');
-      expect(response.body.data.error.confirm_password).toEqual('ERROR_MISSING_CONFIRM_PASSWORD');
+      expect(response.body.first_name).toEqual('ERROR_MISSING_FIRST_NAME');
+      expect(response.body.last_name).toEqual('ERROR_MISSING_LAST_NAME');
+      expect(response.body.email).toEqual('ERROR_INVALID_EMAIL');
+      expect(response.body.password).toEqual('ERROR_MISSING_PASSWORD');
+      expect(response.body.confirm_password).toEqual('ERROR_PASSWORD_MISMATCH');
     });
   
-    test('Return 422 if email is invalid.', async () => {
+    test('Return 409 if user already exists', async () => {
       
-      const payload = {
-        first_name: 'Domenico',
-        last_name: 'Salvia',
-        email: 'dbsalvia@gmail.com',
-        password: 'password123',
-        confirm_password: 'password123'
-      }
+        const password = faker.internet.password();
+        const payload = {
+            'first_name': faker.name.firstName(),
+            'last_name': faker.name.lastName(),
+            'email': faker.internet.email(),
+            'password': password,
+            'confirm_password': password
+        }
       
-      const response = await request(server).post('/user', payload);
-      const secondResponse = await request(server).post('/user', payload);
+      const response = await request(server)
+        .post('/user')
+        .set('content-type', 'application/json')
+        .send(payload);
+
+      const secondResponse = await request(server)
+        .post('/user')
+        .set('content-type', 'application/json')
+        .send(payload);
       
       expect(secondResponse.status).toEqual(409);
       expect(secondResponse.type).toEqual('application/json');
-      expect(secondResponse.body.data.error).toEqual('ERROR_EXISTING_EMAIL');
-    }); */
+      expect(secondResponse.body.email).toEqual('ERROR_EXISTING_EMAIL');
+    });
 
 });
