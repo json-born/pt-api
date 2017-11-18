@@ -1,7 +1,6 @@
 import * as validator from 'validator';
 import { Context } from 'koa';
-import { error } from 'util';
-
+import { ValidationError } from './errors';
 
 export default function validate(fields: Object): (ctx: Context, next: Function) => Promise<any> {
     return async (ctx: Context, next: Function): Promise<any>  => {
@@ -21,8 +20,7 @@ export default function validate(fields: Object): (ctx: Context, next: Function)
         });
         
         if (Object.keys(errors).length) {
-            ctx.status = 400;
-            ctx.response.body = errors;
+            throw new ValidationError(errors);
         } else {
             await next();
         }

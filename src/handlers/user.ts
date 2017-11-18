@@ -23,10 +23,11 @@ export async function register(ctx: Context, next: Function) {
     }
     catch(error) {
         if (error.code === 'ER_DUP_ENTRY') {
-            ctx.response.status = 409;
-            ctx.response.body = {
-                email: 'ERROR_EXISTING_EMAIL'
-            };
+            throw new BadRequestError(
+                409, 
+                'User already exists', 
+                { email: 'ERROR_EXISTING_EMAIL'}
+            );
         }
     }
 }
