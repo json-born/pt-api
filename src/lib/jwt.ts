@@ -7,17 +7,17 @@ if (!SECRET) {
     throw new Error('No JWT secret set');
 }
 
-export async function generate(payload: Object, expiresIn?: string) {
-    const options: Object = {
+export async function generate(payload: Object, options?: Object) {
+    options = {
+        ...options,
         algorithm: ALGORITHM,
-        expiresIn: expiresIn
     };
-    
+
     try {
         const token = await jwt.sign(payload, SECRET, options);
         return token;
     }
     catch(error) {
-        return error;
+        throw new Error(error);
     }
 }

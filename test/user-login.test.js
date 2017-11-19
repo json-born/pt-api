@@ -22,7 +22,7 @@ describe('routes: /login (POST)', () => {
         expect(response.status).toEqual(200);
         expect(response.type).toEqual('application/json');
 
-        expect(response.body.id).toBeDefined();
+        expect(response.body.user_id).toBeDefined();
         expect(response.body.token).toBeDefined();
     });
 
@@ -42,5 +42,23 @@ describe('routes: /login (POST)', () => {
 
         expect(response.body.email).toEqual('ERROR_INVALID_EMAIL');
         expect(response.body.password).toEqual('ERROR_MISSING_PASSWORD');
+    });
+
+    test('Return 401 if authentication fails', async () => {
+        const payload = {
+            'email': 'test@test.com',
+            'password': 'somepassword'
+        }
+
+        const response = await request(server)
+            .post('/login')
+            .set('content-type', 'application/json')
+            .send(payload);
+
+        expect(response.status).toEqual(401);
+        expect(response.type).toEqual('application/json');
+
+        expect(response.body.email).toEqual('ERROR_INVALID_EMAIL');
+        expect(response.body.password).toEqual('ERROR_INVALID_PASSWORD');
     });
 });

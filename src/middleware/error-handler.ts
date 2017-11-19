@@ -7,12 +7,12 @@ export function errorHandler() {
             await next();
         }
         catch (error) {
-            logger.error(error.stack);
-
-            ctx.status = error.status || 500;
-
-            if (ctx.status !== 500) {
-                ctx.body = error.errors
+            ctx.response.status = error.status || 500;
+            if (ctx.status === 500) {
+                logger.error(error.stack);
+            } else {
+                ctx.body = error.errors;
+                logger.debug(error.stack);
             }
         }
     }

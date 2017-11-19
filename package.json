@@ -4,7 +4,7 @@
   "license": "ISC",
   "version": "1.0.0",
   "scripts": {
-    "start": "export NODE_ENV=dev && tsc && node ./bin/www",
+    "start": "export NODE_ENV=development && tsc && node ./bin/www",
     "test": "export NODE_ENV=test && tsc && jest",
     "seed": "tsc && node ./db-scripts/seeds/index.js"
   },
