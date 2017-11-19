@@ -32,3 +32,9 @@ export async function register(ctx: Context, next: Function) {
     }
 }
 
+export async function login(ctx: Context, next: Function) {
+
+    ctx.response.status = 200;
+    ctx.response.body = {};
+
+}

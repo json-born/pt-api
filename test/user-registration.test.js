@@ -1,13 +1,12 @@
 const faker = require('faker');
 const server = require('../bin/www');
 const request = require('supertest');
-const database = require('../dist/lib/database')
 
 afterEach(async () => {
-    await server.close();
+    return await server.close();
 });
 
-describe('routes: user (POST)', () => {
+describe('routes: /user (POST)', () => {
 
     test('Return 200 if successful.', async () => {
         const password = faker.internet.password();

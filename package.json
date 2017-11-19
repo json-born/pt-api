@@ -4,8 +4,8 @@
   "license": "ISC",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsc && node ./bin/www",
-    "test": "tsc && jest",
+    "start": "export NODE_ENV=dev && tsc && node ./bin/www",
+    "test": "export NODE_ENV=test && tsc && jest",
     "seed": "tsc && node ./db-scripts/seeds/index.js"
   },
   "repository": {
@@ -17,11 +17,13 @@
   },
   "homepage": "https://github.com/DBSalvia/pt-api#readme",
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "verbose": true
   },
   "dependencies": {
     "commander": "^2.11.0",
     "dotenv": "^4.0.0",
+    "jsonwebtoken": "^8.1.0",
     "knex": "^0.14.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",

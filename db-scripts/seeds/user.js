@@ -3,6 +3,7 @@ const database = require('../../dist/lib/database').database;
 
 async function seed() {
     await seedTrainer();
+    await seedTestClient();
     await seedClients(10);
 }
 
@@ -12,6 +13,24 @@ async function reset() {
         .del();
 
     await database('user').del();
+}
+
+async function seedTestClient() {
+    const trainer = await database
+        .select()
+        .from('user')
+        .where('type', 'trainer')
+        .first();
+
+    return await database('user').insert({
+        type: 'client',
+        trainer_id: trainer.id,
+        first_name: 'test',
+        last_name: 'user',
+        email: 'testuser@test.com',
+        password: 'password',
+        consultations_available: 9999
+    });
 }
 
 async function seedTrainer() {
