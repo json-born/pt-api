@@ -18,6 +18,6 @@ export async function generate(payload: Object, options?: Object) {
         return token;
     }
     catch(error) {
-        throw new Error(error);
+        throw error;
     }
 }
