@@ -9,7 +9,7 @@ afterEach(async () => {
 
 describe('routes: user (POST)', () => {
 
-    test('Return 200 if successful.', async () => {
+    test('Return 201 if successful.', async () => {
         const password = faker.internet.password();
         const payload = {
             'first_name': faker.name.firstName(),
@@ -24,7 +24,7 @@ describe('routes: user (POST)', () => {
             .set('content-type', 'application/json')
             .send(payload);
 
-        expect(response.status).toEqual(200);
+        expect(response.status).toEqual(201);
         expect(response.type).toEqual('application/json');
 
         expect(response.body.id).toBeDefined();

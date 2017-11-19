@@ -19,6 +19,7 @@ export async function register(ctx: Context, next: Function) {
         const result = await userService.create(payload);
         delete payload.password;
         payload.id = result.shift();
+        ctx.response.status = 201;
         ctx.response.body = payload;
     }
     catch(error) {
