@@ -12,8 +12,3 @@ export const database = Knex({
         database : 'pt_api'
     }
 });
-
-database.raw('select 1+1 as result').catch(error => {
-    logger.error(error);
-    process.exit(1);
-});

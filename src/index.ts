@@ -7,8 +7,10 @@ import { router } from './router';
 
 export const app = new Koa();
 
-app.use(Logger());
-app.use(BodyParser());
+if(process.env.NODE_ENV !== 'test') {
+    app.use(Logger());
+}
 
+app.use(BodyParser());
 app.use(router.routes());
 app.use(router.allowedMethods());
