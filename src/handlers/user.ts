@@ -1,8 +1,8 @@
 import { Context } from 'koa';
 
-import * as jwt from '../lib/jwt';
-import { logger } from '../lib/logger';
 import { ValidationError, AuthenticationError, BadRequestError, CustomError } from '../lib/errors';
+import * as jwt from '../lib/jwt';
+import logger from '../lib/logger';
 
 import * as userService from '../services/user';
 
@@ -10,13 +10,15 @@ export async function register(ctx: Context, next: Function) {
     const payload: userService.User = ctx.request.body;
     const trainer: userService.User = await userService.getTrainer();
     
-    delete payload.confirm_password;
     payload.trainer_id = trainer.id;
+    delete payload.confirm_password;
     
     try {
         const result = await userService.create(payload);
-        delete payload.password;
         payload.id = result.shift();
+        delete payload.password;
+        
+        ctx.response.status = 201;
         ctx.response.body = payload;
     }
     catch(error) {
@@ -58,4 +60,9 @@ export async function login(ctx: Context, next: Function) {
     catch(error) {
         throw error;
     }
+}
+
+export async function read(ctx: Context, next: Function) {
+    console.log(ctx.state.user);
+    ctx.response.status = 200;
 }

@@ -1,6 +1,6 @@
 const env = require('dotenv').config();
 
-const logger = require('../../dist/lib/logger').logger;
+const logger = require('../../dist/lib/logger').default;
 const users = require('./user');
 const media = require('./media');
 const consultations = require('./consultation');

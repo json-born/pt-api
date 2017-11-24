@@ -1,8 +1,8 @@
 import * as validator from 'validator';
 import { Context } from 'koa';
-import { ValidationError } from './errors';
+import { ValidationError } from '../lib/errors';
 
-export default function validate(fields: Object): (ctx: Context, next: Function) => Promise<any> {
+export default function validate(fields: Object) {
     return async (ctx: Context, next: Function): Promise<any>  => {
         const errors: Object = {};
         
