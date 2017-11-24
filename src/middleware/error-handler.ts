@@ -1,5 +1,5 @@
 import { Context } from 'koa';
-import { logger } from '../lib/logger'
+import logger from '../lib/logger'
 
 export function errorHandler() {
     return async function (ctx: Context, next: Function) {

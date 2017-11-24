@@ -3,7 +3,7 @@ const dotenv = require('dotenv').config();
 const commander = require('commander');
 
 const app = require('../dist/index').app;
-const logger = require('../dist/lib/logger').logger;
+const logger = require('../dist/lib/logger').default;
 
 commander
   .option('-H, --host <host>', 'specify the host [0.0.0.0]', '0.0.0.0')

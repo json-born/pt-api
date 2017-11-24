@@ -3,7 +3,9 @@ import * as Router from 'koa-router';
 import { errorHandler } from './middleware/error-handler';
 
 import * as userHandler from './handlers/user';
-import validate from './lib/validator';
+
+import validate from './middleware/validator';
+import isAuthenticated from './middleware/is-authenticated';
 
 export const router: Router = new Router();
 
@@ -16,6 +18,8 @@ router.post('/user', validate({
     password: ['required', 'ERROR_MISSING_PASSWORD'],
     confirm_password: ['required', 'equals(password)', 'ERROR_PASSWORD_MISMATCH']
 }), userHandler.register);
+
+router.get('/user', isAuthenticated(), userHandler.read);
 
 router.post('/login', validate({
     email: ['required', 'isEmail', 'ERROR_INVALID_EMAIL'],

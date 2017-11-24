@@ -1,6 +1,6 @@
 import * as Knex from 'knex';
 
-import { logger } from './logger';
+import logger from './logger';
 
 export const database = Knex({
     client: 'mysql',

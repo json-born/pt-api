@@ -20,7 +20,7 @@ const modes = {
     }),
 };
 
-export const logger: LoggerInstance = new Logger({
+export default new Logger({
     transports: [
         modes[mode]
     ],
