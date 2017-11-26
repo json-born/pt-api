@@ -12,17 +12,17 @@ export async function getTrainer(): Promise<User> {
         .first();
 }
 
-export async function getByCredentials(payload: LoginPayload) {
+export async function readOne(email: string) {
     return await database
         .select()
         .from('user')
-        .where('email', payload.email)
-        .andWhere('password', payload.password)
+        .where('email', email)
         .first();
 }
 
 export interface User {
     id ?: number,
+    type ?: 'trainer' | 'client',
     trainer_id ?: number,
     first_name: string,
     last_name: string,
