@@ -9,13 +9,13 @@ async function seed(count = 10) {
 
     const trainer = await database
         .select()
-        .from('users')
+        .from('user')
         .where('type', 'trainer')
         .first();
     
     const clients = await database
         .select()
-        .from('users')
+        .from('user')
         .where('type', 'client');
 
     for (let client of clients) {
@@ -24,7 +24,8 @@ async function seed(count = 10) {
                 .insert({
                     client_id: client.id,
                     trainer_id: trainer.id,
-                    date: faker.date.future()
+                    start_date: faker.date.future(),
+                    end_date: faker.date.future()
                 })
         }
     }

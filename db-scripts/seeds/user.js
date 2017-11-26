@@ -1,5 +1,6 @@
 const faker = require('faker');
 const database = require('../../dist/lib/database').database;
+const bcrypt = require('bcrypt');
 
 async function seed() {
     await seedTrainer();
@@ -28,7 +29,7 @@ async function seedTestClient() {
         first_name: 'test',
         last_name: 'user',
         email: 'testuser@test.com',
-        password: 'password',
+        password: bcrypt.hashSync('password', 10),
         consultations_available: 9999
     });
 }
@@ -39,7 +40,7 @@ async function seedTrainer() {
         first_name: 'Ryan',
         last_name: 'Evans',
         email: 'info@reptcoaching.co.uk',
-        password: 'password'
+        password: bcrypt.hashSync('password', 10)
     });
 }
 
@@ -57,7 +58,7 @@ async function seedClients(count = 10) {
             first_name: faker.name.firstName(),
             last_name: faker.name.lastName(),
             email: faker.internet.email(),
-            password: faker.internet.password(),
+            password: bcrypt.hashSync(faker.internet.password(), 10),
             consultations_available: faker.random.number({min: 0, max: 10})
         });
     }

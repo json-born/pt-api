@@ -10,7 +10,7 @@ describe('routes: /login (POST)', () => {
 
     test('Return 200 if successful.', async () => {
         const payload = {
-            'email': 'test@test.com',
+            'email': 'testuser@test.com',
             'password': 'password'
         }
 
@@ -26,11 +26,8 @@ describe('routes: /login (POST)', () => {
         expect(response.body.token).toBeDefined();
     });
 
-    test('Return 400 if any fields are missing/invalid.', async () => {
-        const payload = {
-            'email': '',
-            'password': ''
-        }
+    test('Return 400 if any fields are missing', async () => {
+        const payload = {}
 
         const response = await request(server)
             .post('/login')

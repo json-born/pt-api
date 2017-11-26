@@ -35,8 +35,8 @@ export class AuthenticationError extends Error {
     public status: Number;
     public errors: Object;
 
-    constructor(message: string, errors?: Object) {
-        super(message);
+    constructor(errors?: Object) {
+        super('Authentication failed');
         this.status = 401;
         this.errors = errors || {};
     }
