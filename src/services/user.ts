@@ -1,15 +1,7 @@
 import { database } from '../lib/database';
 
-export async function create(payload: User) {
-    return await database('user').insert(payload);
-}
-
-export async function getTrainer(): Promise<User> {
-    return await database
-        .select()
-        .from('user')
-        .where('type', 'trainer')
-        .first();
+export async function create(user: User) {
+    return await database('user').insert(user);
 }
 
 export async function readOne(email: string) {

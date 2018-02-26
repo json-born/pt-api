@@ -30,7 +30,7 @@ export default function validate(fields: Object) {
 function runRule(ctx: Context, rule: string, fieldValue: string = ''): boolean {
     const args: string[] = [fieldValue];
     const match: RegExpMatchArray | null = rule.match(/(.*)\((.*)\)/);
-    const nullFieldCheck: boolean = !fieldValue || fieldValue.trim() === '';
+    const nullFieldCheck: boolean = !fieldValue || fieldValue.toString().trim() === '';
 
     if(rule === 'required') {
         return !nullFieldCheck;

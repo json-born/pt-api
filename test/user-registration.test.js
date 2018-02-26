@@ -1,6 +1,7 @@
 const faker = require('faker');
 const server = require('../bin/www');
 const request = require('supertest');
+const database = require('../dist/lib/database').database;
 
 afterEach(async () => {
     return await server.close();
@@ -10,12 +11,19 @@ describe('routes: /user (POST)', () => {
 
     test('Return 201 if successful.', async () => {
         const password = faker.internet.password();
+        const trainer = await database
+            .select()
+            .from('user')
+            .where('type', 'trainer')
+            .first();
+
         const payload = {
             'first_name': faker.name.firstName(),
             'last_name': faker.name.lastName(),
             'email': faker.internet.email(),
             'password': password,
-            'confirm_password': password
+            'confirm_password': password,
+            'trainer_id':  trainer.id
         }
 
         const response = await request(server)
@@ -89,16 +97,23 @@ describe('routes: /user (POST)', () => {
         expect(response.body.email).toEqual('ERROR_INVALID_EMAIL');
         expect(response.body.password).toEqual('ERROR_MISSING_PASSWORD');
         expect(response.body.confirm_password).toEqual('ERROR_PASSWORD_MISMATCH');
+        expect(response.body.trainer_id).toEqual('ERROR_MISSING_TRAINER_ID');
     });
 
     test('Return 409 if user already exists', async () => {
         const password = faker.internet.password();
+        const trainer = await database
+            .select()
+            .from('user')
+            .where('type', 'trainer')
+            .first();
         const payload = {
             'first_name': faker.name.firstName(),
             'last_name': faker.name.lastName(),
             'email': faker.internet.email(),
             'password': password,
-            'confirm_password': password
+            'confirm_password': password,
+            'trainer_id': trainer.id
         }
 
         const response = await request(server)

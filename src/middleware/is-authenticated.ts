@@ -8,10 +8,6 @@ export default function isAuthenticated() {
     return async (ctx: Context, next: Function) => {
         let token: string = ctx.request.headers['authorization'] || '';
     
-        if(!token) {
-            throw new AuthenticationError('Invalid token');
-        }
-            
         try {
             const decodedToken: Object = await jwt.decode(token);
             ctx.state.user = decodedToken;

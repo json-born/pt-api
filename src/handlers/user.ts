@@ -8,21 +8,18 @@ import logger from '../lib/logger';
 import * as userService from '../services/user';
 
 export async function register(ctx: Context, next: Function) {
-    const payload: userService.User = ctx.request.body;
-    const trainer: userService.User = await userService.getTrainer();
+    const data: userService.User = ctx.request.body;    
     
-    payload.password = await hash(payload.password, 10);
-    payload.trainer_id = trainer.id;
-    
-    delete payload.confirm_password;
+    data.password = await hash(data.password, 10);
+    delete data.confirm_password;
     
     try {
-        const result = await userService.create(payload);
-        payload.id = result.shift();
-        delete payload.password;
+        const result = await userService.create(data);
+        data.id = result.shift();
+        delete data.password;
         
         ctx.response.status = 201;
-        ctx.response.body = payload;
+        ctx.response.body = data;
     }
     catch(error) {
         if (error.code === 'ER_DUP_ENTRY') {
@@ -35,12 +32,12 @@ export async function register(ctx: Context, next: Function) {
 }
 
 export async function login(ctx: Context, next: Function) {
-    const payload: userService.User = ctx.request.body;
+    const data: userService.LoginPayload = ctx.request.body;
     
     try {
-        const user: userService.User = await userService.readOne(payload.email);
+        const user: userService.User = await userService.readOne(data.email);
         const hash = user ? user.password : '';
-        const validPassword = await compare(payload.password, hash);
+        const validPassword = await compare(data.password, hash);
         
         if (!user || !validPassword) {
             throw new AuthenticationError({
