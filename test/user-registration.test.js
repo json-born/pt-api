@@ -78,7 +78,7 @@ describe('routes: /user (POST)', () => {
 
         expect(response.status).toEqual(400);
         expect(response.type).toEqual('application/json');
-        expect(response.body.email).toEqual('ERROR_INVALID_EMAIL');
+        expect(response.body.email).toEqual('ERROR_MISSING_INVALID_EMAIL');
     });
 
     test('Return 400 if any fields are missing.', async () => {
@@ -94,7 +94,7 @@ describe('routes: /user (POST)', () => {
 
         expect(response.body.first_name).toEqual('ERROR_MISSING_FIRST_NAME');
         expect(response.body.last_name).toEqual('ERROR_MISSING_LAST_NAME');
-        expect(response.body.email).toEqual('ERROR_INVALID_EMAIL');
+        expect(response.body.email).toEqual('ERROR_MISSING_INVALID_EMAIL');
         expect(response.body.password).toEqual('ERROR_MISSING_PASSWORD');
         expect(response.body.confirm_password).toEqual('ERROR_PASSWORD_MISMATCH');
         expect(response.body.trainer_id).toEqual('ERROR_MISSING_TRAINER_ID');

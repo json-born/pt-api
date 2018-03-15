@@ -3,14 +3,20 @@ const server = require('../bin/www');
 const request = require('supertest');
 const database = require('../dist/lib/database').database;
 
-const jwt = '';
+let jwt = '', trainer;
 
 afterEach(async () => {
     return await server.close();
 });
 
 beforeAll(async () => {
-    const payload = {
+    trainer = await database
+        .select()
+        .from('user')
+        .where('type', 'trainer')
+        .first();
+    
+    const userPayload = {
         'email': 'testuser@test.com',
         'password': 'password'
     }
@@ -18,37 +24,66 @@ beforeAll(async () => {
     const response = await request(server)
         .post('/login')
         .set('content-type', 'application/json')
-        .send(payload);
+        .send(userPayload);
 
     jwt = response.body.token;
 });
 
-describe('routes: /consultations/available/:id (GET)', () => {
+describe('routes: /consultations/available/:trainerId (GET)', () => {
 
     test('Return 200/204 if successful', async() => {
+        const now = new Date();
+        const oneMonthFromNow = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate());
         const response = await request(server)
-            .get('/consultations/available/:id')
+            .get(`/consultations/available/${trainer.id}`)
             .set('content-type', 'application/json')
-            .set('Authorization', `Bearer ${jwt}`);
-        
-        expect(response.status == 200 || response.status == 204).toBeTruthy();
+            .set('Authorization', `Bearer ${jwt}`)
+            .query({
+                from_date: now,
+                to_date: oneMonthFromNow
+            });
+            
+        expect([200,204].includes(response.status)).toBeTruthy();
         expect(response.type).toEqual('application/json');
-        expect(response.body.available_consultations).toBeDefined();
+        expect(response.body.availability).toBeDefined();
     });
 
-    test('By default, return a range of dates exactly one month from now', async() => {
-        const trainer = await database
-            .select()
-            .from('user')
-            .where('type', 'trainer')
-            .first();
-        
+    test('Return 204 if no to/from parameters specified', async () => {
         const response = await request(server)
-            .get('/consultations')
+            .get(`/consultations/available/${trainer.id}`)
             .set('content-type', 'application/json')
             .set('Authorization', `Bearer ${jwt}`);
             
-        expect(response.status).toEqual(200);
+        expect(response.status).toEqual(204);
         expect(response.type).toEqual('application/json');
+        expect(response.body).toEqual({});
+    });
+
+    test('Return 400 if no trainer id specified', async () => {
+        const response = await request(server)
+            .get(`/consultations/available/`)
+            .set('content-type', 'application/json')
+            .set('Authorization', `Bearer ${jwt}`)
+            
+        expect(response.status).toEqual(400);
+        expect(response.type).toEqual('application/json');
+        expect(response.body.trainer_id).toEqual("ERROR_MISSING_TRAINER_ID");
+    });
+
+    test('Return 400 if trainer id given is invalid', async () => {
+        const client = await database
+            .select()
+            .from('user')
+            .where('type', 'client')
+            .first();
+
+        const response = await request(server)
+            .get(`/consultations/available/${client.id}`)
+            .set('content-type', 'application/json')
+            .set('Authorization', `Bearer ${jwt}`);
+            
+        expect(response.status).toEqual(400);
+        expect(response.type).toEqual('application/json');
+        expect(response.body.trainer_id).toEqual("ERROR_INVALID_TRAINER_ID");
     });
 });

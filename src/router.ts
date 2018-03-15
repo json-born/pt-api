@@ -14,7 +14,7 @@ router.use(errorHandler());
 router.post('/user', validate({
     first_name: ['required', 'ERROR_MISSING_FIRST_NAME'],
     last_name: ['required', 'ERROR_MISSING_LAST_NAME'],
-    email: ['required', 'isEmail', 'ERROR_INVALID_EMAIL'],
+    email: ['required', 'isEmail', 'ERROR_MISSING_INVALID_EMAIL'],
     password: ['required', 'ERROR_MISSING_PASSWORD'],
     confirm_password: ['required', 'equals(password)', 'ERROR_PASSWORD_MISMATCH'],
     trainer_id:['required', 'ERROR_MISSING_TRAINER_ID']
@@ -23,6 +23,6 @@ router.post('/user', validate({
 router.get('/user', isAuthenticated(), userHandler.read);
 
 router.post('/login', validate({
-    email: ['required', 'isEmail', 'ERROR_INVALID_EMAIL'],
+    email: ['required', 'isEmail', 'ERROR_MISSING_INVALID_EMAIL'],
     password: ['required', 'ERROR_MISSING_PASSWORD'],
 }), userHandler.login);
