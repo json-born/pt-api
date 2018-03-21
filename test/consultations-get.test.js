@@ -48,7 +48,7 @@ describe('routes: /consultations/available/:trainerId (GET)', () => {
         expect(response.body.availability).toBeDefined();
     });
 
-    test('Return 204 if no to/from parameters specified', async () => {
+    test('Return 204 if no date parameters specified', async () => {
         const response = await request(server)
             .get(`/consultations/available/${trainer.id}`)
             .set('content-type', 'application/json')
