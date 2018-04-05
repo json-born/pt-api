@@ -2,36 +2,26 @@ const faker = require('faker');
 const youtube = require('youtube-random-video');
 const database = require('../../dist/lib/database').database;
 
+module.exports = {
+    reset: reset,
+    seed: seed
+}
+
 async function reset() {
     await database('media').del();
 }
 
-async function seed(count = 10) {
+async function seed(trainerId, clientIds) {
+    for (let clientId of clientIds) {
+        const videoData = await getRandomVideo();
+        const mediaUrl = `https://www.youtube.com/watch?v=${videoData['id'].videoId}`;
 
-    const trainer = await database
-        .select()
-        .from('user')
-        .where('type', 'trainer')
-        .first();
-    
-    const clients = await database
-        .select()
-        .from('user')
-        .where('type', 'client');
-
-    for (let client of clients) {
-        for (let i = 0; i < count; i++) {
-            const videoData = await getRandomVideo();
-            const mediaUrl = `https://www.youtube.com/watch?v=${videoData['id'].videoId}`;
-
-            await database('media')
-                .insert({
-                    media_url: mediaUrl,
-                    comment: faker.lorem.sentence(),
-                    client_id: client.id,
-                    trainer_id: trainer.id
-                })
-        }
+        await database('media').insert({
+            media_url: mediaUrl,
+            comment: faker.lorem.sentence(),
+            client_id: clientId,
+            trainer_id: trainerId
+        });   
     }
 }
 
@@ -42,9 +32,4 @@ function getRandomVideo() {
             else { reject(error) }
         });
     });
-}
-
-module.exports = {
-    reset: reset,
-    seed: seed
 }

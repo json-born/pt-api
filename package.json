@@ -6,7 +6,7 @@
   "scripts": {
     "start": "export NODE_ENV=development && tsc && node ./bin/www",
     "test": "export NODE_ENV=test && tsc && jest",
-    "seed": "tsc && node ./db-scripts/seeds/index.js"
+    "seed": "node ./db-scripts/seeds/index.js"
   },
   "repository": {
     "type": "git",
