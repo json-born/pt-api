@@ -107,6 +107,7 @@ describe('routes: /user (POST)', () => {
             .from('user')
             .where('type', 'trainer')
             .first();
+            
         const payload = {
             'first_name': faker.name.firstName(),
             'last_name': faker.name.lastName(),
