@@ -1,9 +1,11 @@
 const faker = require('faker');
+const moment = require('moment');
+
 const server = require('../bin/www');
 const request = require('supertest');
 const database = require('../dist/lib/database').database;
 
-let jwt = '', trainer;
+let jwt = '', trainer = {};
 
 afterEach(async () => {
     return await server.close();
@@ -32,20 +34,18 @@ beforeAll(async () => {
 describe('routes: /consultations/available/:trainerId (GET)', () => {
 
     test('Return 200/204 if successful', async() => {
-        const now = new Date();
-        const oneMonthFromNow = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate());
         const response = await request(server)
             .get(`/consultations/available/${trainer.id}`)
             .set('content-type', 'application/json')
             .set('Authorization', `Bearer ${jwt}`)
             .query({
-                from_date: now,
-                to_date: oneMonthFromNow
+                from_date: moment().format('YYYY-MM-DD'),
+                to_date: moment().startOf('isoWeek').add('1', month)
             });
             
         expect([200,204].includes(response.status)).toBeTruthy();
         expect(response.type).toEqual('application/json');
-        expect(response.body.availability).toBeDefined();
+        expect(response.body).toBeDefined();
     });
 
     test('Return 204 if no date parameters specified', async () => {

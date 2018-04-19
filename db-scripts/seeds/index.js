@@ -2,7 +2,7 @@ const env = require('dotenv').config();
 
 const logger = require('../../dist/lib/logger').default;
 const trainer = require('./trainer');
-const clients = require('./clients');
+const client = require('./client');
 const media = require('./media');
 const consultations = require('./consultation');
 
@@ -28,7 +28,7 @@ if(process.env.NODE_ENV === 'production') {
 
 async function run() {
     const trainerId = await trainer.seed();
-    const clientIds = await clients.seed(trainerId, 5);
+    const clientIds = await client.seed(trainerId, 5);
     
     await media.seed(trainerId, clientIds);
     await consultations.seed(trainerId, clientIds, 10);
@@ -37,6 +37,6 @@ async function run() {
 async function reset() {
     await media.reset();
     await consultations.reset();
-    await clients.reset();
+    await client.reset();
     await trainer.reset();
 }

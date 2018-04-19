@@ -3,6 +3,7 @@ import * as Router from 'koa-router';
 import { errorHandler } from './middleware/error-handler';
 
 import * as userHandler from './handlers/user';
+import * as trainerHandler from './handlers/trainer';
 
 import validate from './middleware/validator';
 import isAuthenticated from './middleware/is-authenticated';
@@ -26,3 +27,8 @@ router.post('/login', validate({
     email: ['required', 'isEmail', 'ERROR_MISSING_INVALID_EMAIL'],
     password: ['required', 'ERROR_MISSING_PASSWORD'],
 }), userHandler.login);
+
+router.get('/trainer/:trainerId/availability/', validate({
+    email: ['required', 'isEmail', 'ERROR_MISSING_INVALID_EMAIL'],
+    password: ['required', 'ERROR_MISSING_PASSWORD'],
+}), trainerHandler.readAvailability);
