@@ -28,7 +28,7 @@ router.post('/login', validate({
     password: ['required', 'ERROR_MISSING_PASSWORD'],
 }), userHandler.login);
 
-router.get('/trainer/:trainerId/availability/', validate({
-    email: ['required', 'isEmail', 'ERROR_MISSING_INVALID_EMAIL'],
-    password: ['required', 'ERROR_MISSING_PASSWORD'],
-}), trainerHandler.readAvailability);
+router.get('/trainer/:trainerId/availability', isAuthenticated(), validate({
+    from_date: ['isISO8601', 'ERROR_INVALID_FROM_DATE'],
+    to_date: ['isISO8601', 'ERROR_INVALID_TO_DATE'],
+}), trainerHandler.getAvailability);

@@ -35,12 +35,12 @@ describe('routes: /consultations/available/:trainerId (GET)', () => {
 
     test('Return 200/204 if successful', async() => {
         const response = await request(server)
-            .get(`/consultations/available/${trainer.id}`)
+            .get(`/trainer/${trainer.id}/availability`)
             .set('content-type', 'application/json')
             .set('Authorization', `Bearer ${jwt}`)
             .query({
                 from_date: moment().format('YYYY-MM-DD'),
-                to_date: moment().startOf('isoWeek').add('1', month)
+                to_date: moment().add(1, 'month').format('YYYY-MM-DD')
             });
             
         expect([200,204].includes(response.status)).toBeTruthy();
@@ -48,42 +48,66 @@ describe('routes: /consultations/available/:trainerId (GET)', () => {
         expect(response.body).toBeDefined();
     });
 
-    test('Return 204 if no date parameters specified', async () => {
+    test('Return a valid payload if successful', async() => {
+        //TODO
+    });
+
+    test('Return 400 if no date parameters specified', async () => {
         const response = await request(server)
-            .get(`/consultations/available/${trainer.id}`)
+            .get(`/trainer/${trainer.id}/availability`)
             .set('content-type', 'application/json')
             .set('Authorization', `Bearer ${jwt}`);
             
-        expect(response.status).toEqual(204);
-        expect(response.type).toEqual('application/json');
-        expect(response.body).toEqual({});
-    });
-
-    test('Return 400 if no trainer id specified', async () => {
-        const response = await request(server)
-            .get(`/consultations/available/`)
-            .set('content-type', 'application/json')
-            .set('Authorization', `Bearer ${jwt}`)
-            
         expect(response.status).toEqual(400);
         expect(response.type).toEqual('application/json');
-        expect(response.body.trainer_id).toEqual("ERROR_MISSING_TRAINER_ID");
+        expect(response.body.from_date).toEqual("ERROR_INVALID_FROM_DATE");
+        expect(response.body.to_date).toEqual("ERROR_INVALID_TO_DATE");
     });
 
-    test('Return 400 if trainer id given is invalid', async () => {
+    test('Return 204 if trainer id given is invalid', async () => {
         const client = await database
             .select()
             .from('user')
             .where('type', 'client')
             .first();
 
+        console.log(client.id);
+
         const response = await request(server)
-            .get(`/consultations/available/${client.id}`)
+            .get(`/trainer/${client.id}/availability`)
+            .set('content-type', 'application/json')
+            .set('Authorization', `Bearer ${jwt}`)
+            .query({
+                from_date: moment().format('YYYY-MM-DD'),
+                to_date: moment().add(1, 'month').format('YYYY-MM-DD')
+            });
+            
+        expect(response.status).toEqual(204);
+        expect(response.type).toEqual("");
+        expect(response.body).toEqual({});
+    });
+
+    test('Return 400 if from_date or to_date is invalid', async () => {
+        const response = await request(server)
+            .get(`/trainer/${trainer.id}/availability`) 
             .set('content-type', 'application/json')
             .set('Authorization', `Bearer ${jwt}`);
             
         expect(response.status).toEqual(400);
         expect(response.type).toEqual('application/json');
-        expect(response.body.trainer_id).toEqual("ERROR_INVALID_TRAINER_ID");
+        expect(response.body.from_date).toEqual("ERROR_INVALID_FROM_DATE");
+        expect(response.body.to_date).toEqual("ERROR_INVALID_TO_DATE");
+    });
+
+    test('Return 401 if not authenticated', async () => {
+        const response = await request(server)
+            .get(`/trainer/${trainer.id}/availability`)
+            .set('content-type', 'application/json')
+            .query({
+                from_date: moment().format('YYYY-MM-DD'),
+                to_date: moment().startOf('isoWeek').add(1, 'month')
+            });
+            
+        expect(response.status).toEqual(401);
     });
 });
