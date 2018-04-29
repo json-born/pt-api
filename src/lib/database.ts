@@ -9,6 +9,7 @@ export const database = Knex({
         host : process.env.DB_HOST,
         user : process.env.DB_USER,
         password : process.env.DB_PASS,
-        database : 'pt_api'
+        database : 'pt_api',
+        dateStrings: true
     }
 });

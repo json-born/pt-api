@@ -1,29 +1,42 @@
 const env = require('dotenv').config();
 
 const logger = require('../../dist/lib/logger').default;
-const users = require('./user');
+const trainer = require('./trainer');
+const client = require('./client');
 const media = require('./media');
 const consultations = require('./consultation');
 
-const run = async () => {
-    await media.reset();
-    await consultations.reset();
-    await users.reset();
-    
-    await users.seed();
-    await media.seed();
-    await consultations.seed();
-};
-
 if(process.env.NODE_ENV === 'production') {
+    logger.error('This command cannot be run on production.');
     process.exit();
 }
 
-run().then(() => {
-    logger.info('seeding complete');
-    process.exit();
-}).catch((error) => {
-    logger.error(error);
-    process.exit();
-});
+(async () => {
+    try {
+        await reset();
+        await run();
+        
+        logger.info('Seeding completed successfully.');
+        process.exit();
+    }
+    catch(e) {
+        logger.error(e);
+        process.exit();
+    }
+})();
 
+
+async function run() {
+    const trainerId = await trainer.seed();
+    const clientIds = await client.seed(trainerId, 5);
+    
+    await media.seed(trainerId, clientIds);
+    await consultations.seed(trainerId, clientIds, 10);
+};
+
+async function reset() {
+    await media.reset();
+    await consultations.reset();
+    await client.reset();
+    await trainer.reset();
+}

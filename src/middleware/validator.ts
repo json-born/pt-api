@@ -9,8 +9,8 @@ export default function validate(fields: Object) {
         Object.keys(fields).forEach(field => {
             let ruleSet: string[] = fields[field];
             const errorMessage: string = ruleSet[ruleSet.length - 1];
-            const fieldValue: string = ctx.request.body[field];
-
+            const fieldValue: string = ctx.request.body[field] || ctx.request.query[field];
+            
             for (let rule of ruleSet.slice(0, -1)) {
                 let validRule: boolean = runRule(ctx, rule, fieldValue);
                 if(!validRule) {

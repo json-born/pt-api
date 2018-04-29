@@ -41,7 +41,7 @@ export async function login(ctx: Context, next: Function) {
         
         if (!user || !validPassword) {
             throw new AuthenticationError({
-                email: 'ERROR_INVALID_EMAIL',
+                email: 'ERROR_MISSING_INVALID_EMAIL',
                 password: 'ERROR_INVALID_PASSWORD'
             });
         }

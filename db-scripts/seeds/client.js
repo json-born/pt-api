@@ -6,25 +6,11 @@ module.exports = {
     
     async reset() {
         await database('user').where('type', 'client').del();
-        await database('user').del();
     },
     
-    async seedTrainer() {
-        const result = await database('user').insert({
-            type: 'trainer',
-            first_name: 'Ryan',
-            last_name: 'Evans',
-            email: 'info@reptcoaching.co.uk',
-            password: bcrypt.hashSync('password', 10)
-        });
-
-        return result.shift();
-    },
-    
-    async seedClients(trainerId, count) {
+    async seed(trainerId, count) {
         let results = [];
         
-        // Seed test client
         results.push(await database('user').insert({
             type: 'client',
             trainer_id: trainerId,
@@ -35,7 +21,6 @@ module.exports = {
             consultations_available: 9999
         }));
 
-        // Seed dummy clients
         for (let i = 0; i < count - 1; i++) {
             results.push(await database('user').insert({
                 type: 'client',
