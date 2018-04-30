@@ -71,8 +71,6 @@ describe('routes: /consultations/available/:trainerId (GET)', () => {
             .where('type', 'client')
             .first();
 
-        console.log(client.id);
-
         const response = await request(server)
             .get(`/trainer/${client.id}/availability`)
             .set('content-type', 'application/json')

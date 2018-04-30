@@ -4,7 +4,6 @@ import { database } from '../lib/database';
 
 import * as trainerConsultationService from './trainer-consultation';
 import * as trainerHolidayService from './trainer-holiday';
-import { start } from 'repl';
 
 export async function read(id: number) {
     const availability = await database
@@ -17,7 +16,7 @@ export async function read(id: number) {
 
 export async function generateAvailableConsultations(id: number, fromDate: string, toDate: string) {    
     const availability = await read(id);
-    const existingConsultations =  await trainerConsultationService.read(id, fromDate, toDate);
+    const existingConsultations = await trainerConsultationService.read(id, fromDate, toDate);
     const holidays = await trainerHolidayService.read(id, fromDate, toDate);
  
     let startDate: moment.Moment = moment(fromDate);
