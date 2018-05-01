@@ -33,7 +33,7 @@ beforeAll(async () => {
 
 describe('routes: /consultations/available/:trainerId (GET)', () => {
 
-    test('Return 200/204 if successful', async() => {
+    test('Return 200 if successful', async() => {
         const response = await request(server)
             .get(`/trainer/${trainer.id}/availability`)
             .set('content-type', 'application/json')
@@ -43,7 +43,7 @@ describe('routes: /consultations/available/:trainerId (GET)', () => {
                 to_date: moment().add(1, 'month').format('YYYY-MM-DD')
             });
             
-        expect([200,204].includes(response.status)).toBeTruthy();
+        expect(response.status).toEqual(200);
         expect(response.type).toEqual('application/json');
         expect(response.body).toBeDefined();
     });
