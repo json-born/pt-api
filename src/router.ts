@@ -7,6 +7,7 @@ import * as trainerHandler from './handlers/trainer';
 
 import validate from './middleware/validator';
 import isAuthenticated from './middleware/is-authenticated';
+import isTrainer from './middleware/is-trainer';
 
 export const router: Router = new Router();
 
@@ -27,6 +28,17 @@ router.post('/login', validate({
     email: ['required', 'isEmail', 'ERROR_MISSING_INVALID_EMAIL'],
     password: ['required', 'ERROR_MISSING_PASSWORD'],
 }), userHandler.login);
+
+router.get('/trainer/consultations', 
+    isAuthenticated(),
+    isTrainer(),
+    validate({
+        from_date: ['isISO8601', 'ERROR_INVALID_FROM_DATE'],
+        to_date: ['isISO8601', 'ERROR_INVALID_TO_DATE']
+    }),
+    trainerHandler.getConsultations
+);
+
 
 router.get('/trainer/:trainerId/availability', isAuthenticated(), validate({
     from_date: ['isISO8601', 'ERROR_INVALID_FROM_DATE'],

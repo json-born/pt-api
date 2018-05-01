@@ -5,19 +5,19 @@ import { database } from '../lib/database';
 import * as trainerConsultationService from './trainer-consultation';
 import * as trainerHolidayService from './trainer-holiday';
 
-export async function read(id: number) {
+export async function read(trainerId: number) {
     const availability = await database
         .select()
         .from('trainer_availability')
-        .where('trainer_id', id);
+        .where('trainer_id', trainerId);
 
     return arrayToObject('day_of_week', availability);
 }
 
-export async function generateAvailableConsultations(id: number, fromDate: string, toDate: string) {    
-    const availability = await read(id);
-    const existingConsultations = await trainerConsultationService.read(id, fromDate, toDate);
-    const holidays = await trainerHolidayService.read(id, fromDate, toDate);
+export async function generateAvailableConsultations(trainerId: number, fromDate: string, toDate: string) {    
+    const availability = await read(trainerId);
+    const existingConsultations = await trainerConsultationService.read(trainerId, fromDate, toDate);
+    const holidays = await trainerHolidayService.read(trainerId, fromDate, toDate);
  
     let startDate: moment.Moment = moment(fromDate);
     let endDate: moment.Moment = moment(toDate);
