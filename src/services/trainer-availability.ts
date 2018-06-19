@@ -58,6 +58,6 @@ export async function generateAvailableConsultations(trainerId: number, fromDate
         }
         startDate.add(1, 'day');
     }
-
+    
     return availableConsultations;
 }

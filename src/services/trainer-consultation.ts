@@ -3,6 +3,7 @@ import { arrayToObject } from '../lib/utils';
 import { database } from '../lib/database';
 
 export async function read(trainerId: number, fromDate: string, toDate: string) {
+
     let startDate: moment.Moment = moment(fromDate);
     let endDate: moment.Moment = moment(toDate);
 
@@ -16,5 +17,6 @@ export async function read(trainerId: number, fromDate: string, toDate: string) 
                 endDate.format("YYYY-MM-DD HH:mm:ss")
             ]
         );
+    
     return arrayToObject('start_date', trainerConsultations);
 }

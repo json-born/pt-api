@@ -41,7 +41,7 @@ export async function login(ctx: Context, next: Function) {
         
         if (!user || !validPassword) {
             throw new AuthenticationError({
-                email: 'ERROR_MISSING_INVALID_EMAIL',
+                email: 'ERROR_INVALID_EMAIL',
                 password: 'ERROR_INVALID_PASSWORD'
             });
         }
@@ -63,6 +63,6 @@ export async function login(ctx: Context, next: Function) {
 }
 
 export async function read(ctx: Context, next: Function) {
-    console.log(ctx.state.user);
+    console.log(ctx.params.id);
     ctx.response.status = 200;
 }

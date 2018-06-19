@@ -37,7 +37,7 @@ describe('routes: /login (POST)', () => {
         expect(response.status).toEqual(400);
         expect(response.type).toEqual('application/json');
 
-        expect(response.body.email).toEqual('ERROR_MISSING_INVALID_EMAIL');
+        expect(response.body.email).toEqual('ERROR_INVALID_EMAIL');
         expect(response.body.password).toEqual('ERROR_MISSING_PASSWORD');
     });
 
@@ -55,7 +55,7 @@ describe('routes: /login (POST)', () => {
         expect(response.status).toEqual(401);
         expect(response.type).toEqual('application/json');
 
-        expect(response.body.email).toEqual('ERROR_MISSING_INVALID_EMAIL');
+        expect(response.body.email).toEqual('ERROR_INVALID_EMAIL');
         expect(response.body.password).toEqual('ERROR_INVALID_PASSWORD');
     });
 });
